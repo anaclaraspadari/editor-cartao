@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Editor de Cartões</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f2f2f2;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    h1 {
+        text-align: center;
+        width: 100%;
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    .card-container {
+        width: 100%;
+        margin: 10px auto;
+        padding: 20px;
+        border: 2px solid #ccc;
+        border-radius: 10px;
+        background-color: #ffffff;
+        text-align: center;
+        position: relative;
+    }
+
+    .card-container img {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+        margin-bottom: 10px;
+    }
+
+    .card-content {
+        font-size: 16px;
+        text-align: center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1;
+        width: 70%;
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+    .form-container {
+        width: 50%;
+        margin: 10px;
+        padding: 20px;
+        border: 2px solid #ccc;
+        border-radius: 10px;
+        background-color: #ffffff;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .form-group select,
+    .form-group input[type="color"],
+    .form-group textarea {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+    .form-group textarea {
+        resize: none;
+        height: 100px;
+    }
+
+    @media (max-width: 600px) {
+        .container {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .form-container,
+        .card-container {
+            width: 100%;
+        }
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>Editor de Cartões Online</h1>
+    <div class="form-container">
+        <div class="form-group">
+            <label for="bgColor">Cor de Fundo:</label>
+            <input type="color" id="bgColor">
+        </div>
+        <div class="form-group">
+            <label for="textColor">Cor do Texto:</label>
+            <input type="color" id="textColor">
+        </div>
+        <div class="form-group">
+            <label for="fontSize">Tamanho da Fonte:</label>
+            <select id="fontSize">
+                <option value="24px">Pequeno</option>
+                <option value="28px" selected>Normal</option>
+                <option value="32px">Grande</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="imageSelect">Escolha uma Imagem:</label>
+            <select id="imageSelect">
+                <option value="aniversarioimg.jpg">Aniversário</option>
+                <option value="natalimg.jpg">Natal</option>
+                <option value="pascoaimg.jpg">Páscoa</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="cardText">Texto do Cartão:</label>
+            <textarea id="cardText" placeholder="Escreva seu texto aqui"></textarea>
+        </div>
+    </div>
+    <div class="card-container" id="previewCard">
+        <img id="cardImage" src="image1.jpg" alt="Imagem do Cartão">
+        <div class="card-content" id="cardContent"></div>
+    </div>
+</div>
+
+<script>
+    const bgColorInput = document.getElementById('bgColor');
+    const textColorInput = document.getElementById('textColor');
+    const fontSizeSelect = document.getElementById('fontSize');
+    const imageSelect = document.getElementById('imageSelect');
+    const cardTextInput = document.getElementById('cardText');
+    const previewCard = document.getElementById('previewCard');
+    const cardContent = document.getElementById('cardContent');
+    const cardImage = document.getElementById('cardImage');
+
+    function updatePreview() {
+        const bgColor = bgColorInput.value;
+        const textColor = textColorInput.value;
+        const fontSize = fontSizeSelect.value;
+        const imageUrl = imageSelect.value;
+        const cardText = cardTextInput.value;
+
+        previewCard.style.backgroundColor = bgColor;
+        previewCard.style.color = textColor;
+        previewCard.style.fontSize = fontSize;
+        cardContent.textContent = cardText;
+        cardContent.style.fontSize = fontSize;
+        cardImage.src = imageUrl;
+    }
+    
+    bgColorInput.addEventListener('input', updatePreview);
+    textColorInput.addEventListener('input', updatePreview);
+    fontSizeSelect.addEventListener('change', updatePreview);
+    imageSelect.addEventListener('change', updatePreview);
+    cardTextInput.addEventListener('input', updatePreview);
+
+    window.addEventListener('DOMContentLoaded', updatePreview);
+</script>
+</body>
+</html>
